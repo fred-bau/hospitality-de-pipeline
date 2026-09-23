@@ -1,0 +1,1 @@
+hospitality_dbt/snapshots/scd_raw_listings.sql

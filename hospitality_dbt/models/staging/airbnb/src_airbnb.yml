@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: airbnb
+    database: HOSPITALITY_DB
+    schema: RAW
+    tables:
+      - name: raw_listings
+        identifier: RAW_LISTINGS
+      - name: raw_calendar
+        identifier: RAW_CALENDAR
+      - name: raw_reviews
+        identifier: RAW_REVIEWS

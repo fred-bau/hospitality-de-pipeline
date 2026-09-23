@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: dim_listings
+    description: "Core dimensional model for Airbnb listings combining listing attributes, calendar availability, and review metrics."
+    columns:
+      - name: listing_id
+        description: "Primary key of the listing."
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_airbnb__listings')
+                field: listing_id
+
+      - name: room_type
+        description: "Type of room offered."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
+
+      - name: price_eur
+        description: "Nightly price in EUR."
+        data_tests:
+          - not_null
+
+      - name: total_reviews_count
+        description: "Total count of reviews received."
+        data_tests:
+          - not_null
+
+      - name: total_available_days
+        description: "Total available days in calendar."
+        data_tests:
+          - not_null
+
+  - name: fct_reviews
+    description: "Granular review events for Airbnb listings."
+    columns:
+      - name: review_id
+        description: "Primary key of the review."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: listing_id
+        description: "Foreign key referencing dim_listings."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
+
+      - name: review_date
+        description: "Date the review was posted."
+        data_tests:
+          - not_null
+
+  - name: fct_calendar
+    description: "Daily availability and pricing records per listing."
+    columns:
+      - name: listing_id
+        description: "Foreign key referencing dim_listings."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_listings')
+                field: listing_id
+
+      - name: calendar_date
+        description: "Date for calendar entry."
+        data_tests:
+          - not_null        
