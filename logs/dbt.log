@@ -1,0 +1,407 @@
+==================== 2026-09-17T16:18:56.571054Z | 01a0b029-fbb0-7381-af54-5581e308939c ====================
+16:18:56.573203 [info ]: Installing dbt project and profile setup
+16:18:56.579841 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:18:56.581019 [info ]: Success Project created successfully!
+16:18:56.581166 [info ]: Info Project name: jaffle_shop
+16:18:56.581196 [info ]: Info Project directory: jaffle_shop
+16:18:56.581377 [info ]: Info Setting up your profile...
+16:18:56.582789 [info ]: Info Creating new profile...
+16:20:51.029134 [error]: [IoError (dbt1001)]: Failed to get adapter selection: IO error: read interrupted
+16:20:51.102333 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error [1m 55s]
+==================== 2026-09-17T16:25:40.831470Z | 01a0b030-26d0-78a1-8e71-0b757318bfd3 ====================
+16:25:40.833727 [info ]: Installing dbt project and profile setup
+16:25:40.839428 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:25:40.840419 [info ]: Success Project created successfully!
+16:25:40.840648 [info ]: Info Project name: hospitality_dbt
+16:25:40.840663 [info ]: Info Project directory: hospitality_dbt
+16:25:40.840823 [info ]: Info Setting up your profile...
+16:25:40.842160 [info ]: Info Creating new profile...
+16:28:17.100821 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:37:31.993204 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:37:31.994726 [info ]: Validating profile inputs, adapters, and connection
+
+16:37:31.995129 [info ]: dbt-core 2.0.0-alpha.5
+16:37:31.999377 [info ]: Started loading project
+16:37:32.021810 [info ]: Loading ~/.dbt/profiles.yml
+16:37:32.032943 [info ]: Finished loading project [  0.03s]
+16:37:32.034548 [info ]: Started debugging
+16:37:32.035016 [info ]: Debugging profile: dev
+16:37:32.035092 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:37:32.035113 [info ]: Debugging platform: macos aarch64 (unix)
+16:37:32.035335 [info ]: Debugging adapter type: snowflake (remote)
+16:37:32.074845 [info ]: Debugging dependencies:
+  git: OK
+16:37:32.078145 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "FREDBAU",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:37:34.778767 [info ]: Finished debugging [  2.74s]
+16:37:34.780521 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=a1465df2-e782-4cc9-687d-20f9e722e659&request_guid=682331b0-698e-4e0b-7e21-61831fdfbfdb&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:37:34.930372 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [11m 54s]
+==================== 2026-09-17T16:38:05.278064Z | 01a0b03b-82d3-7b40-8a43-87651f1fbe85 ====================
+16:38:05.280476 [info ]: Installing dbt project and profile setup
+16:38:05.282325 [info ]: Warning Directory 'hospitality_dbt' already exists, using 'hospitality_dbt_1' instead
+16:38:05.289731 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:38:05.290316 [info ]: Success Project created successfully!
+16:38:05.290333 [info ]: Info Project name: hospitality_dbt_1
+16:38:05.290356 [info ]: Info Project directory: hospitality_dbt_1
+16:38:05.290547 [info ]: Info Setting up your profile...
+16:38:05.292034 [info ]: Loading ~/.dbt/profiles.yml
+16:38:05.302989 [info ]: Info Creating new profile...
+16:38:09.344042 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:38:49.261636 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:38:49.262829 [info ]: Validating profile inputs, adapters, and connection
+
+16:38:49.263176 [info ]: dbt-core 2.0.0-alpha.5
+16:38:49.266542 [info ]: Started loading project
+16:38:49.284401 [info ]: Loading ~/.dbt/profiles.yml
+16:38:49.291657 [info ]: Finished loading project [  0.03s]
+16:38:49.292977 [info ]: Started debugging
+16:38:49.293407 [info ]: Debugging profile: dev
+16:38:49.293438 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:38:49.293448 [info ]: Debugging platform: macos aarch64 (unix)
+16:38:49.293653 [info ]: Debugging adapter type: snowflake (remote)
+16:38:49.324403 [info ]: Debugging dependencies:
+  git: OK
+16:38:49.327279 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "FREDBAU",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:38:50.239872 [info ]: Finished debugging [  0.95s]
+16:38:50.240947 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=9d52a2cf-5b27-4f1f-68eb-5557d868e339&request_guid=0f901b17-f93f-4123-4d22-14a6488861d4&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:38:50.266989 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [45.0s]
+==================== 2026-09-17T16:40:01.065946Z | 01a0b03d-471f-7a71-b5d5-46ffebf16348 ====================
+16:40:01.068309 [info ]: Installing dbt project and profile setup
+16:40:01.077259 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:40:01.078825 [info ]: Success Project created successfully!
+16:40:01.079018 [info ]: Info Project name: hostpitality_dbt
+16:40:01.079137 [info ]: Info Project directory: hostpitality_dbt
+16:40:01.079372 [info ]: Info Setting up your profile...
+16:40:01.080761 [info ]: Loading ~/.dbt/profiles.yml
+16:40:01.091072 [info ]: Info Creating new profile...
+16:40:02.738995 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:41:04.566862 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:41:04.567721 [info ]: Validating profile inputs, adapters, and connection
+
+16:41:04.567936 [info ]: dbt-core 2.0.0-alpha.5
+16:41:04.570986 [info ]: Started loading project
+16:41:04.585774 [info ]: Loading ~/.dbt/profiles.yml
+16:41:04.592358 [info ]: Finished loading project [  0.02s]
+16:41:04.593364 [info ]: Started debugging
+16:41:04.593766 [info ]: Debugging profile: dev
+16:41:04.593787 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:41:04.593795 [info ]: Debugging platform: macos aarch64 (unix)
+16:41:04.593967 [info ]: Debugging adapter type: snowflake (remote)
+16:41:04.620771 [info ]: Debugging dependencies:
+  git: OK
+16:41:04.623789 [info ]: Debugging connection:
+  "account": "\"JQ49907\"",
+  "user": "\"FREDBAU\"",
+  "database": "\"HOSPITALITY_DB\"",
+  "warehouse": "\"COMPUTE_WH\"",
+  "schema": "\"TRANSFORM\"",
+  "role": "\"ACCOUNTADMIN\""
+16:43:23.827518 [info ]: Finished debugging [  2m19s]
+16:43:23.829042 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+Post "https://\"JQ49907\".snowflakecomputing.com:443/session/v1/login-request?databaseName=%22HOSPITALITY_DB%22&requestId=27f22ca6-80d9-4d03-5cb8-7e8a1e587d6d&request_guid=f9e444d4-adaf-4901-79a8-c5a0b212cae3&roleName=%22ACCOUNTADMIN%22&schemaName=%22TRANSFORM%22&warehouse=%22COMPUTE_WH%22": dial tcp: lookup "JQ49907".snowflakecomputing.com: no such host
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:43:23.893245 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [3m 23s]
+==================== 2026-09-17T16:45:06.094058Z | 01a0b041-ee9f-7b12-8484-f5ada0304189 ====================
+16:45:06.097183 [info ]: Installing dbt project and profile setup
+16:45:06.100017 [info ]: Warning Directory 'hospitality_dbt' already exists, using 'hospitality_dbt_2' instead
+16:45:06.107080 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:45:06.107800 [info ]: Success Project created successfully!
+16:45:06.107838 [info ]: Info Project name: hospitality_dbt_2
+16:45:06.108050 [info ]: Info Project directory: hospitality_dbt_2
+16:45:06.108402 [info ]: Info Setting up your profile...
+16:45:06.110014 [info ]: Loading ~/.dbt/profiles.yml
+16:45:06.118546 [info ]: Info Creating new profile...
+16:45:08.792337 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:46:17.537332 [error]: [IoError (dbt1001)]: Failed to get input for warehouse: IO error: read interrupted
+16:46:17.570517 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error [1m 11s]
+==================== 2026-09-17T16:46:25.845817Z | 01a0b043-2635-7cd0-8f61-e37d3a803914 ====================
+16:46:25.845873 [info ]: Installing dbt project and profile setup
+16:46:25.845958 [info ]: Warning Directory 'hospitality_dbt' already exists, using 'hospitality_dbt_3' instead
+16:46:25.850032 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:46:25.850076 [info ]: Success Project created successfully!
+16:46:25.850087 [info ]: Info Project name: hospitality_dbt_3
+16:46:25.850101 [info ]: Info Project directory: hospitality_dbt_3
+16:46:25.850114 [info ]: Info Setting up your profile...
+16:46:25.850255 [info ]: Loading ~/.dbt/profiles.yml
+16:46:25.850677 [info ]: Info Creating new profile...
+16:46:28.029305 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:47:17.090175 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:47:17.090742 [info ]: Validating profile inputs, adapters, and connection
+
+16:47:17.091053 [info ]: dbt-core 2.0.0-alpha.5
+16:47:17.094525 [info ]: Started loading project
+16:47:17.111038 [info ]: Loading ~/.dbt/profiles.yml
+16:47:17.118548 [info ]: Finished loading project [  0.02s]
+16:47:17.119331 [info ]: Started debugging
+16:47:17.119882 [info ]: Debugging profile: dev
+16:47:17.119932 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:47:17.119943 [info ]: Debugging platform: macos aarch64 (unix)
+16:47:17.120166 [info ]: Debugging adapter type: snowflake (remote)
+16:47:17.147274 [info ]: Debugging dependencies:
+  git: OK
+16:47:17.150155 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "fredbau",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:47:18.069264 [info ]: Finished debugging [  0.95s]
+16:47:18.070173 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=6061fb17-eb70-4bc0-57ed-d00556ceb26a&request_guid=b1df4cea-9db2-4107-6fbf-fd9c3ec82f01&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:47:18.096976 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [52.3s]
+==================== 2026-09-17T16:53:22.706229Z | 01a0b049-8284-7aa3-914e-86a57a49847b ====================
+16:53:22.708397 [info ]: Installing dbt project and profile setup
+16:53:22.710931 [info ]: Warning Directory 'hospitality_dbt' already exists, using 'hospitality_dbt_4' instead
+16:53:22.718188 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:53:22.718759 [info ]: Success Project created successfully!
+16:53:22.718793 [info ]: Info Project name: hospitality_dbt_4
+16:53:22.718961 [info ]: Info Project directory: hospitality_dbt_4
+16:53:22.719180 [info ]: Info Setting up your profile...
+16:53:22.720987 [info ]: Loading ~/.dbt/profiles.yml
+16:53:22.732623 [info ]: Info Creating new profile...
+16:53:24.964665 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:54:53.678344 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:54:53.679402 [info ]: Validating profile inputs, adapters, and connection
+
+16:54:53.679668 [info ]: dbt-core 2.0.0-alpha.5
+16:54:53.683011 [info ]: Started loading project
+16:54:53.701498 [info ]: Loading ~/.dbt/profiles.yml
+16:54:53.710109 [info ]: Finished loading project [  0.03s]
+16:54:53.711207 [info ]: Started debugging
+16:54:53.711602 [info ]: Debugging profile: dev
+16:54:53.711653 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:54:53.711699 [info ]: Debugging platform: macos aarch64 (unix)
+16:54:53.711927 [info ]: Debugging adapter type: snowflake (remote)
+16:54:53.740948 [info ]: Debugging dependencies:
+  git: OK
+16:54:53.743920 [info ]: Debugging connection:
+  "account": "EEVCGDB-JQ49907",
+  "user": "fredbau",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:54:55.077930 [debug]: Query executed on node unknown:
+select 1 as id
+16:54:55.079794 [info ]: Debugging connection test: OK
+16:54:55.079996 [info ]: Debugged All checks passed!
+16:54:55.080346 [info ]: Finished debugging [  1.37s]
+16:54:55.142076 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' successfully for target 'dev' [1m 32s]
+==================== 2026-09-17T16:58:05.476655Z | 01a0b04d-d316-7123-a4f0-b0a624cdb6c3 ====================
+16:58:05.479847 [info ]: Installing dbt project and profile setup
+16:58:05.488808 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:58:05.490726 [info ]: Success Project created successfully!
+16:58:05.490923 [info ]: Info Project name: hospitality_dbt
+16:58:05.491136 [info ]: Info Project directory: hospitality_dbt
+16:58:05.491452 [info ]: Info Setting up your profile...
+16:58:05.493001 [info ]: Loading ~/.dbt/profiles.yml
+16:58:05.507089 [info ]: Profile 'hospitality_dbt' already exists. You can choose how to proceed.
+16:58:23.655980 [info ]: Info Creating new profile...
+16:58:24.868217 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:58:49.346095 [info ]: Info Backup created at /Users/fred/.dbt/profiles.yml.bkp
+16:58:49.348264 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+16:58:49.349318 [info ]: Validating profile inputs, adapters, and connection
+
+16:58:49.349577 [info ]: dbt-core 2.0.0-alpha.5
+16:58:49.352913 [info ]: Started loading project
+16:58:49.370241 [info ]: Loading ~/.dbt/profiles.yml
+16:58:49.373580 [info ]: Finished loading project [  0.02s]
+16:58:49.374746 [info ]: Started debugging
+16:58:49.375006 [info ]: Debugging profile: dev
+16:58:49.375047 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:58:49.375058 [info ]: Debugging platform: macos aarch64 (unix)
+16:58:49.375272 [info ]: Debugging adapter type: snowflake (remote)
+16:58:49.406140 [info ]: Debugging dependencies:
+  git: OK
+16:58:49.409454 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "FREDBAU",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:58:50.326621 [info ]: Finished debugging [  0.95s]
+16:58:50.328458 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=570903fa-b5ad-4e23-414d-acdf279e1fcf&request_guid=fbdf82a7-e9e2-4e29-4ffb-129c7adba5a1&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:58:50.360595 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [44.9s]
+==================== 2026-09-17T16:59:06.976406Z | 01a0b04e-c35f-7ac0-ab24-db4d9040bf40 ====================
+16:59:06.976466 [info ]: Installing dbt project and profile setup
+16:59:06.976580 [info ]: Warning Directory 'hospitality_dbt' already exists, using 'hospitality_dbt_1' instead
+16:59:06.981227 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:59:06.981288 [info ]: Success Project created successfully!
+16:59:06.981305 [info ]: Info Project name: hospitality_dbt_1
+16:59:06.981316 [info ]: Info Project directory: hospitality_dbt_1
+16:59:06.981330 [info ]: Info Setting up your profile...
+16:59:06.981457 [info ]: Loading ~/.dbt/profiles.yml
+16:59:06.982018 [info ]: Profile 'hospitality_dbt_1' already exists. You can choose how to proceed.
+16:59:45.891294 [info ]: Info Profile setup cancelled.
+16:59:45.891489 [info ]: Validating profile inputs, adapters, and connection
+
+16:59:45.891546 [info ]: dbt-core 2.0.0-alpha.5
+16:59:45.891769 [info ]: Started loading project
+16:59:45.895467 [info ]: Loading ~/.dbt/profiles.yml
+16:59:45.896849 [info ]: Finished loading project [  0.01s]
+16:59:45.896968 [info ]: Started debugging
+16:59:45.897031 [info ]: Debugging profile: dev
+16:59:45.897069 [info ]: Debugging dbt version: 2.0.0-alpha.5
+16:59:45.897089 [info ]: Debugging platform: macos aarch64 (unix)
+16:59:45.897114 [info ]: Debugging adapter type: snowflake (remote)
+16:59:45.928118 [info ]: Debugging dependencies:
+  git: OK
+16:59:45.928222 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "FREDBAU",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+16:59:46.872398 [info ]: Finished debugging [  0.98s]
+16:59:46.872636 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=ca94621f-ea14-4bae-5ff2-9390c6dccbcc&request_guid=6cbd9013-6777-4a44-66e5-6c99dbe57214&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+16:59:46.958476 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [40.0s]
+==================== 2026-09-17T17:00:04.948777Z | 01a0b04f-a5c6-7191-9428-20dc31206e89 ====================
+17:00:04.950690 [info ]: Installing dbt project and profile setup
+17:00:04.957722 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+17:00:04.958886 [info ]: Success Project created successfully!
+17:00:04.959031 [info ]: Info Project name: hospitality_dbt
+17:00:04.959061 [info ]: Info Project directory: hospitality_dbt
+17:00:04.959237 [info ]: Info Setting up your profile...
+17:00:04.960500 [info ]: Loading ~/.dbt/profiles.yml
+17:00:04.971260 [info ]: Profile 'hospitality_dbt' already exists. You can choose how to proceed.
+17:00:13.347162 [info ]: Info Editing existing profile...
+17:00:14.602196 [info ]: Editing existing profile - skipping cloud config fetch
+17:00:31.644132 [info ]: Info Backup created at /Users/fred/.dbt/profiles.yml.bkp
+17:00:31.645346 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+17:00:31.646269 [info ]: Validating profile inputs, adapters, and connection
+
+17:00:31.646508 [info ]: dbt-core 2.0.0-alpha.5
+17:00:31.649732 [info ]: Started loading project
+17:00:31.666745 [info ]: Loading ~/.dbt/profiles.yml
+17:00:31.670116 [info ]: Finished loading project [  0.02s]
+17:00:31.671243 [info ]: Started debugging
+17:00:31.671474 [info ]: Debugging profile: dev
+17:00:31.671507 [info ]: Debugging dbt version: 2.0.0-alpha.5
+17:00:31.671595 [info ]: Debugging platform: macos aarch64 (unix)
+17:00:31.671882 [info ]: Debugging adapter type: snowflake (remote)
+17:00:31.697109 [info ]: Debugging dependencies:
+  git: OK
+17:00:31.700325 [info ]: Debugging connection:
+  "account": "JQ49907",
+  "user": "FREDBAU",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+17:00:32.631370 [info ]: Finished debugging [  0.96s]
+17:00:32.632903 [error]: [AuthenticationFailed (dbt1011)]: dbt was unable to connect to the specified database.
+The following error was returned:
+
+[Snowflake] 261004 (08004): failed to auth for unknown reason. HTTP: 404, URL: https://JQ49907.snowflakecomputing.com:443/session/v1/login-request?databaseName=HOSPITALITY_DB&requestId=a5709f9f-ee12-416f-5b8d-98bfade8b6c4&request_guid=12aa02a1-0a55-49c9-683e-782f050895ac&roleName=ACCOUNTADMIN&schemaName=TRANSFORM&warehouse=COMPUTE_WH
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles
+17:00:32.664649 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' with 1 error for target 'dev' [27.7s]
+==================== 2026-09-17T17:02:46.453299Z | 01a0b052-1ca8-7312-ad6b-feb7207e04ed ====================
+17:02:46.455935 [info ]: Installing dbt project and profile setup
+17:02:46.464523 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+17:02:46.466315 [info ]: Success Project created successfully!
+17:02:46.466581 [info ]: Info Project name: hospitality_dbt
+17:02:46.466829 [info ]: Info Project directory: hospitality_dbt
+17:02:46.467217 [info ]: Info Setting up your profile...
+17:02:46.468877 [info ]: Loading ~/.dbt/profiles.yml
+17:02:46.484660 [info ]: Profile 'hospitality_dbt' already exists. You can choose how to proceed.
+17:02:56.625885 [info ]: Info Creating new profile...
+17:02:57.357617 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+17:03:50.554019 [info ]: Info Backup created at /Users/fred/.dbt/profiles.yml.bkp
+17:03:50.556073 [info ]: Success Profile written to /Users/fred/.dbt/profiles.yml
+17:03:50.557168 [info ]: Validating profile inputs, adapters, and connection
+
+17:03:50.557469 [info ]: dbt-core 2.0.0-alpha.5
+17:03:50.560793 [info ]: Started loading project
+17:03:50.579574 [info ]: Loading ~/.dbt/profiles.yml
+17:03:50.583452 [info ]: Finished loading project [  0.02s]
+17:03:50.584679 [info ]: Started debugging
+17:03:50.584906 [info ]: Debugging profile: dev
+17:03:50.584946 [info ]: Debugging dbt version: 2.0.0-alpha.5
+17:03:50.584960 [info ]: Debugging platform: macos aarch64 (unix)
+17:03:50.585164 [info ]: Debugging adapter type: snowflake (remote)
+17:03:50.621971 [info ]: Debugging dependencies:
+  git: OK
+17:03:50.625235 [info ]: Debugging connection:
+  "account": "EEVCGDB-JQ49907",
+  "user": "fredbau",
+  "database": "HOSPITALITY_DB",
+  "warehouse": "COMPUTE_WH",
+  "schema": "TRANSFORM",
+  "role": "ACCOUNTADMIN"
+17:03:51.849027 [debug]: Query executed on node unknown:
+select 1 as id
+17:03:51.850969 [info ]: Debugging connection test: OK
+17:03:51.851353 [info ]: Debugged All checks passed!
+17:03:51.851780 [info ]: Finished debugging [  1.27s]
+17:03:51.885477 [info ]: 
+==================== Execution Summary =====================
+Finished 'init' successfully for target 'dev' [1m 5s]
