@@ -1,5 +1,11 @@
-venv/
 .env
-*.csv
 *.gz
 .DS_Store
+venv/
+__pycache__/
+*.pyc
+.dbt/
+target/
+dbt_packages/
+
+logs/
