@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: rpt_neighbourhood_summary
+    description: "One row per city and neighbourhood, for the Tableau dashboard"
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['city', 'neighborhood']
+    columns:
+      - name: city
+        data_tests:
+          - not_null
+      - name: neighborhood
+        data_tests:
+          - not_null
+
+  - name: rpt_city_summary
+    description: "One row per city: market size, true city-level price medians, occupancy, revenue and market structure"
+    columns:
+      - name: city
+        data_tests:
+          - unique
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paris', 'barcelona', 'florence']
+      - name: listings_count
+        data_tests:
+          - not_null
+
+  - name: rpt_city_monthly
+    description: "One row per city per month: forward-looking availability from the calendar and historical review activity"
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['city', 'month']
+    columns:
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paris', 'barcelona', 'florence']
+      - name: month
+        data_tests:
+          - not_null

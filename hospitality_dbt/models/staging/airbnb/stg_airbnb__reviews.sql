@@ -1,16 +1,20 @@
 with source as (
-    select * from {{ source('airbnb', 'raw_reviews') }}
+    {{ union_city_sources('reviews') }}
 ),
 
 renamed as (
     select
+        -- City
+        city,
+
         -- Primary & Foreign Keys
         id as review_id,
         listing_id,
         reviewer_id,
 
-        -- Metadata
-        reviewer_name,
+        -- Content
+        -- reviewer_name is deliberately left out: personal data that no
+        -- downstream model needs (reviewer_id is enough to count reviewers)
         comments as review_text,
 
         -- Timestamps

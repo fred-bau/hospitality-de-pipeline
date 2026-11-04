@@ -4,6 +4,7 @@ with calendar as (
 
 select
     listing_id,
+    city,
     calendar_date,
     is_available,
     minimum_nights,

@@ -2,24 +2,56 @@ version: 2
 
 models:
   - name: stg_airbnb__listings
+    description: "Listings for all cities, one row per listing"
     columns:
       - name: listing_id
-        tests:
+        data_tests:
           - unique
           - not_null
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paris', 'barcelona', 'florence']
 
   - name: stg_airbnb__calendar
+    description: "Daily availability per listing, all cities"
+    data_tests:
+      # One row per listing per day. Warn only: a few duplicates would be
+      # worth investigating, but shouldn't stop the pipeline.
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['listing_id', 'calendar_date']
+          config:
+            severity: warn
     columns:
       - name: listing_id
-        tests:
+        data_tests:
           - not_null
       - name: calendar_date
-        tests:
+        data_tests:
           - not_null
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paris', 'barcelona', 'florence']
 
   - name: stg_airbnb__reviews
+    description: "Guest reviews, all cities. One row per review per listing: hotels list each room type separately and the same review appears on each. Reviewer names are deliberately excluded (data minimisation)."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['review_id', 'listing_id']
     columns:
       - name: review_id
-        tests:
-          - unique
+        data_tests:
           - not_null
+      - name: city
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paris', 'barcelona', 'florence']

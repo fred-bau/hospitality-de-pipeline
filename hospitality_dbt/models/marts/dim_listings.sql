@@ -13,9 +13,11 @@ reviews as (
 select
     -- Primary Keys & Dimensions
     l.listing_id,
+    l.city,
     l.listing_name,
     l.room_type,
     l.neighborhood,
+    -- All three cities (Paris, Barcelona, Florence) price in euros
     coalesce(cast(replace(replace(l.price_raw, '$', ''), ',', '') as numeric), 0) as price_eur,
     l.minimum_nights,
 

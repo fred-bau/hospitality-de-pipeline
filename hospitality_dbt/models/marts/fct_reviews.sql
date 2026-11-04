@@ -5,8 +5,8 @@ with reviews as (
 select
     review_id,
     listing_id,
+    city,
     reviewer_id,
-    reviewer_name,
     review_text,
     review_date
 from reviews

@@ -49,15 +49,22 @@ x-airflow-common:
   # In order to add custom dependencies or upgrade provider packages you can use your extended image.
   # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
   # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.9.0}
-  # build: .
+  build: .
+  # build:  .
   environment:
     &airflow-common-env
-    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    SNOWFLAKE_PRIVATE_KEY_PATH: /home/airflow/.snowflake/rsa_key.p8
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    AWS_REGION: eu-central-1
+    S3_BUCKET_NAME: hospitality-de-pipeline-raw-fred
+    SNOWFLAKE_ACCOUNT: ${SNOWFLAKE_ACCOUNT}
+    SNOWFLAKE_USER: ${SNOWFLAKE_USER}
+    SNOWFLAKE_DATABASE: ${SNOWFLAKE_DATABASE}
+    SNOWFLAKE_WAREHOUSE:  ${SNOWFLAKE_WAREHOUSE}
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
@@ -68,7 +75,7 @@ x-airflow-common:
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-dbt-snowflake}
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
@@ -79,11 +86,12 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ./src:/opt/airflow/src
     - ./hospitality_dbt:/opt/airflow/hospitality_dbt
+    - ${HOME}/.dbt:/home/airflow/.dbt:ro
+    - ./data:/opt/airflow/data
+    - ${HOME}/.snowflake:/home/airflow/.snowflake:ro
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
-    redis:
-      condition: service_healthy
     postgres:
       condition: service_healthy
 
@@ -103,17 +111,17 @@ services:
       start_period: 5s
     restart: always
 
-  redis:
-    image: redis:latest
-    expose:
-      - 6379
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 30s
-      retries: 50
-      start_period: 30s
-    restart: always
+ # redis:
+ #   image: redis:latest
+ #   expose:
+ #     - 6379
+ #   healthcheck:
+ #     test: ["CMD", "redis-cli", "ping"]
+ #     interval: 10s
+ #     timeout: 30s
+ #     retries: 50
+ #    start_period: 30s
+ #   restart: always
 
   airflow-webserver:
     <<: *airflow-common
@@ -147,28 +155,29 @@ services:
       airflow-init:
         condition: service_completed_successfully
 
-  airflow-worker:
-    <<: *airflow-common
-    command: celery worker
-    healthcheck:
-      # yamllint disable rule:line-length
-      test:
-        - "CMD-SHELL"
-        - 'celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}" || celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    environment:
-      <<: *airflow-common-env
-      # Required to handle warm shutdown of the celery workers properly
-      # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
-      DUMB_INIT_SETSID: "0"
-    restart: always
-    depends_on:
-      <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfully
+ # airflow-worker:
+ #   <<: *airflow-common
+ #   command: celery worker
+ #   hostname: airflow-worker
+ #   healthcheck:
+ #     # yamllint disable rule:line-length
+ #    test:
+ #     - "CMD-SHELL"
+ #       - 'celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}" || celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
+ #     interval: 30s
+ #     timeout: 10s
+ #     retries: 5
+ #     start_period: 30s
+ #   environment:
+ #     <<: *airflow-common-env
+ #     # Required to handle warm shutdown of the celery workers properly
+ #     # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
+ #     DUMB_INIT_SETSID: "0"
+ #   restart: always
+ #   depends_on:
+ #     <<: *airflow-common-depends-on
+ #     airflow-init:
+ #       condition: service_completed_successfully
 
   airflow-triggerer:
     <<: *airflow-common
@@ -282,7 +291,7 @@ services:
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
-        condition: service_completed_successfully
+        condition: "service_completed_successfully"
 
 volumes:
   postgres-db-volume:

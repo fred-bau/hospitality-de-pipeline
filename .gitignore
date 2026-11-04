@@ -7,5 +7,7 @@ __pycache__/
 .dbt/
 target/
 dbt_packages/
-
+profiles.yml
 logs/
+*.csv
+data/exports/

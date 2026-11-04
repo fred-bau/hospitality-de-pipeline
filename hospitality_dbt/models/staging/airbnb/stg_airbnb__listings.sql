@@ -1,9 +1,12 @@
 with source as (
-    select * from {{ source('airbnb', 'raw_listings') }}
+    {{ union_city_sources('listings') }}
 ),
 
 renamed as (
     select
+        -- City (which per-city raw table the row came from)
+        city,
+
         -- Primary & Foreign Keys
         id as listing_id,
         host_id,

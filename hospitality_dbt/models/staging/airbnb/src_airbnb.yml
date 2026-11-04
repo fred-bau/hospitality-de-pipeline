@@ -2,12 +2,18 @@ version: 2
 
 sources:
   - name: airbnb
+    description: "Raw Inside Airbnb data: one table per city and file type, loaded by src/load_to_snowflake.py"
     database: HOSPITALITY_DB
     schema: RAW
     tables:
-      - name: raw_listings
-        identifier: RAW_LISTINGS
-      - name: raw_calendar
-        identifier: RAW_CALENDAR
-      - name: raw_reviews
-        identifier: RAW_REVIEWS
+      - name: raw_listings_paris
+      - name: raw_listings_barcelona
+      - name: raw_listings_florence
+
+      - name: raw_calendar_paris
+      - name: raw_calendar_barcelona
+      - name: raw_calendar_florence
+
+      - name: raw_reviews_paris
+      - name: raw_reviews_barcelona
+      - name: raw_reviews_florence

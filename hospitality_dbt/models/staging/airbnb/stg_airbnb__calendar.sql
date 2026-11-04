@@ -1,10 +1,11 @@
 with source as (
-    select * from {{ source('airbnb', 'raw_calendar') }}
+    {{ union_city_sources('calendar') }}
 ),
 
 renamed as (
     select
-        -- Foreign Key
+        -- City & Foreign Key
+        city,
         listing_id,
 
         -- Timestamps

@@ -27,6 +27,7 @@
     )
 }}
 
-select * from {{ source('airbnb', 'raw_listings') }}
+-- All cities, straight from the raw layer (listing IDs are unique across cities)
+{{ union_city_sources('listings') }}
 
 {% endsnapshot %}

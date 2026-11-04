@@ -5,15 +5,26 @@ profile: hospitality_dbt
 seed-paths: ["seeds"]
 model-paths: ["models"]
 macro-paths: ["macros"]
+test-paths: ["tests"]
+snapshot-paths: ["snapshots"]
 clean-targets:
   - "target"
   - "dbt_packages"
 
+# The cities this project covers. Single source of truth: the sources,
+# staging models, snapshot and tests all read this list.
+vars:
+  cities: ['paris', 'barcelona', 'florence']
+
 models:
   hospitality_dbt:
     +static_analysis: strict
-    # Materialize staging models as views, and marts as tables
+    # Staging and intermediate as views, marts and reporting as tables
     staging:
       +materialized: view
+    intermediate:
+      +materialized: view
     marts:
+      +materialized: table
+    reporting:
       +materialized: table
