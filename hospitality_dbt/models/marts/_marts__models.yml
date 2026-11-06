@@ -23,9 +23,12 @@ models:
                 values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
 
       - name: price_eur
-        description: "Nightly price in EUR."
+        description: "Price per night in EUR. Null when the listing shows no price (not actively offered)."
         data_tests:
-          - not_null
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                inclusive: false
 
       - name: total_reviews_count
         description: "Total count of reviews received."

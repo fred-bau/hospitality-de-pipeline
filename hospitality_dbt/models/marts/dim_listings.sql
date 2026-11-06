@@ -18,7 +18,7 @@ select
     l.room_type,
     l.neighborhood,
     -- All three cities (Paris, Barcelona, Florence) price in euros
-    coalesce(cast(replace(replace(l.price_raw, '$', ''), ',', '') as numeric), 0) as price_eur,
+    try_to_number(replace(replace(l.price_raw, '$', ''), ',', ''), 10, 2) as price_eur,
     l.minimum_nights,
 
     -- Calendar Summary Metrics
