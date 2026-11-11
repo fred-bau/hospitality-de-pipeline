@@ -100,11 +100,3 @@ The test suite combines generic tests (keys, accepted values, composite uniquene
 - **Booked nights and revenue are estimates:** they come from Inside Airbnb's occupancy model, not from actual booking data.
 - **Missing prices:** `dim_listings` currently replaces missing prices with 0, which pulls averages down. To be fixed by keeping them as null.
 
-## Next steps
-
-- Replace the separate `dbt run` and `dbt test` tasks with `dbt build`, so a failing test stops downstream models.
-- Use a Snowflake **storage integration** instead of AWS keys in the `COPY` statement.
-- Use a dedicated Snowflake role with least privilege instead of `ACCOUNTADMIN`.
-- Pin `dbt-snowflake` in the Dockerfile.
-- Skip unchanged files in the extract (idempotent uploads).
-- Add the Pinecone load as a final DAG task.
