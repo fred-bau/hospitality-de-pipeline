@@ -33,23 +33,13 @@ with DAG(
         bash_command='python /opt/airflow/src/load_to_snowflake.py',
     )
 
-    # Task 3: Run dbt snapshots (SCD Type 2 tracking)
-    dbt_snapshot = BashOperator(
-        task_id='dbt_snapshot',
-        bash_command='cd /opt/airflow/hospitality_dbt && dbt snapshot',
-    )
-
-    # Task 4: Run dbt transformation models (Staging, Intermediate, Marts)
-    dbt_run = BashOperator(
-        task_id='dbt_run',
-        bash_command='cd /opt/airflow/hospitality_dbt && dbt run',
-    )
-
-    # Task 5: Run dbt data quality tests
-    dbt_test = BashOperator(
-        task_id='dbt_test',
-        bash_command='cd /opt/airflow/hospitality_dbt && dbt test',
+    # Task 3: Build and test everything in dependency order:
+    # snapshots, models (staging -> intermediate -> marts -> reporting) and tests.
+    # If a test fails, the models downstream of it are skipped.
+    dbt_build = BashOperator(
+        task_id='dbt_build',
+        bash_command='cd /opt/airflow/hospitality_dbt && dbt build',
     )
 
     # Pipeline sequence
-    extract_to_s3 >> load_to_snowflake >> dbt_snapshot >> dbt_run >> dbt_test
+    extract_to_s3 >> load_to_snowflake >> dbt_build
