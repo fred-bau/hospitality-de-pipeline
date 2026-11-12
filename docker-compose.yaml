@@ -65,6 +65,7 @@ x-airflow-common:
     SNOWFLAKE_USER: ${SNOWFLAKE_USER}
     SNOWFLAKE_DATABASE: ${SNOWFLAKE_DATABASE}
     SNOWFLAKE_WAREHOUSE:  ${SNOWFLAKE_WAREHOUSE}
+    SNOWFLAKE_ROLE: ${SNOWFLAKE_ROLE}
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
