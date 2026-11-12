@@ -19,6 +19,16 @@ The DAG runs in Docker Compose with the LocalExecutor instead of the CeleryExecu
 - **Why:** one machine and a handful of sequential tasks. Celery adds a worker, Redis and more failure points without any benefit at this scale.
 - **Trade-off:** no distributed workers. Moving to Celery or Kubernetes would be the step up for a larger pipeline.
 
+### `dbt build` as a single task
+The DAG has three tasks: extract, load and `dbt build`. It started with separate `dbt snapshot`, `dbt run` and `dbt test` tasks.
+- **Why:** `dbt build` runs snapshots, models and tests in dependency order and tests each model right after building it. If a test fails, the models downstream of it are skipped and keep their last tested version, so faulty data doesn't reach the reporting tables, the dashboard or the RAG index. With `run` followed by `test`, every table is rebuilt first and problems are only found afterwards.
+- **Trade-off:** less detail in the Airflow UI (one task instead of one per step). The dbt log shows which model or test failed. One Airflow task per model (for example with Astronomer Cosmos) would be the next step for a larger project.
+- **Limit:** the failing model itself has already been rebuilt, and views always show the current raw data. Fully seamless protection would need write-audit-publish (build and test in a separate schema, then swap).
+
+### Pinned dbt versions
+The Dockerfile installs `dbt-core==1.12.5` and `dbt-snowflake==1.12.1`.
+- **Why:** reproducible builds. Without a pin, every rebuild of the image installs the newest version, which can change behaviour without any change to the code. Updates are made deliberately: raise the version, run the DAG, commit.
+
 ## Ingestion
 
 ### One raw table per city and file type
@@ -43,9 +53,15 @@ Each run truncates the table and reloads it with `COPY INTO ... force = true` an
 ### Key-pair authentication for Snowflake
 - **Why:** password logins are blocked once MFA is enforced, and an automated pipeline can't answer an MFA prompt. Key pairs are the standard for service connections.
 
+### A dedicated least-privilege role for the pipeline
+The loader and dbt run as `PIPELINE_ROLE`, not `ACCOUNTADMIN`. The role can use the warehouse, load RAW (`select`, `insert`, `truncate`) and owns the TRANSFORM and SNAPSHOTS schemas, because dbt replaces tables there and only an owner may do that. It sits under `SYSADMIN` in the role hierarchy, so admins still see everything it owns.
+- **Why:** least privilege. The pipeline can't create or drop databases, manage users or change account settings, so a leaked key or a faulty statement can only affect the pipeline's own data. `ACCOUNTADMIN` is reserved for manual admin work.
+- **Verified:** as `PIPELINE_ROLE`, reading RAW and TRANSFORM works, and `create database` fails with "insufficient privileges".
+
 ### Secrets only in `.env` and `~/.snowflake`
 `docker-compose.yaml` only references `${VARIABLES}`. The real values live in an untracked `.env` file, and the private key lives outside the repo.
-- **Why:** GitHub push protection once blocked a commit that contained hardcoded AWS keys. The fix was to move every credential into `.env` and rewrite the unpushed commits. Any key that has ever been in a commit is treated as compromised and rotated.
+- **Why:** GitHub push protection once blocked a commit that contained hardcoded AWS keys. The fix was to move every credential into `.env` and rewrite the unpushed commits.
+- **Verified:** the pushed git history contains no credentials (no AWS key IDs anywhere, no hardcoded passwords in `docker-compose.yaml`, and `.env` was never committed), so no keys had to be rotated.
 
 ### Reviewer names are dropped
 `stg_airbnb__reviews` doesn't select `reviewer_name`.
@@ -69,6 +85,13 @@ The city list lives in a dbt variable, and the macro `union_city_sources` unions
 `scd_raw_listings` tracks changes in 17 listing attributes such as price, availability and host.
 - **Why:** Inside Airbnb only provides the current state, so price history can only be built by snapshotting every run.
 - **Trade-off:** a snapshot can't be backfilled. The history starts at the first run.
+
+### Missing prices are null, not 0
+In `dim_listings`, `price_eur` uses `try_to_number(..., 10, 2)`. A missing price stays null.
+- **Why:** a missing price means "unknown" (usually a listing that isn't actively offered), not "free". With 0, averages were pulled down and the cheapest listing "cost" €0. With null, averages and medians only use known prices. `try_to_number` also keeps the cents and returns null instead of failing on unexpected values.
+- **Scale:** 44% of Paris listings, 17% of Barcelona's and 10% of Florence's show no price. This also explains the low occupancy in Paris: almost half of its listings aren't actively offered.
+- **Test:** the old `not_null` test was replaced by `dbt_utils.accepted_range` (every known price must be > 0), because null is now a valid value.
+- **Rule of thumb:** `coalesce(..., 0)` only where "nothing" really means zero (review counts), never where it means "unknown" (prices, ratings).
 
 ### Materialisations
 Staging and intermediate models are views, and marts and reporting models are tables.
@@ -98,5 +121,18 @@ The test suite combines generic tests (keys, accepted values, composite uniquene
 - **Survivorship bias in reviews:** the reviews file only covers listings that still existed at the time of the snapshot. Deleted listings take their reviews with them (for example, Parisians who rented out their home only for the 2024 Olympics), so older months are undercounted, and the time series should be read for seasonality, not growth.
 - **Reviews are a proxy for stays:** not every guest leaves a review.
 - **Booked nights and revenue are estimates:** they come from Inside Airbnb's occupancy model, not from actual booking data.
-- **Missing prices:** `dim_listings` currently replaces missing prices with 0, which pulls averages down. To be fixed by keeping them as null.
+- **Inactive listings are included in city totals:** listing counts and the median booked nights include listings that show no price and aren't actively offered (44% in Paris), which pulls the Paris median down.
+
+## Next steps
+
+Done:
+- [x] Replace the separate dbt tasks with `dbt build`
+- [x] Pin the dbt versions in the Dockerfile
+- [x] Keep missing prices as null in `dim_listings`
+- [x] Run the pipeline as a dedicated least-privilege role instead of `ACCOUNTADMIN`
+
+Open:
+- [ ] Use a Snowflake **storage integration** instead of AWS keys in the `COPY` statement
+- [ ] Skip unchanged files in the extract (idempotent uploads)
+- [ ] Add the Pinecone load as a final DAG task
 
