@@ -119,6 +119,11 @@ hospitality-de-pipeline/
 
 The reasoning behind the main design choices, and the known limitations of the data, are documented in **[DECISIONS.md](DECISIONS.md)**. The most important limitation: the reviews only cover listings that still existed at the time of the snapshot, so historical demand is undercounted, and the review time series should be read for seasonality, not long-term growth.
 
+## Possible extensions
+
+Incremental loading for larger data volumes, one Airflow task per dbt model (e.g. with Cosmos), write-audit-publish for fully isolated releases.
+
 ## Data source and licence
 
 Data: [Inside Airbnb](https://insideairbnb.com/), snapshot from September 2026, used under the [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/) licence. Reviewer names are dropped in staging and never reach the models or the dashboard.
+

@@ -123,16 +123,4 @@ The test suite combines generic tests (keys, accepted values, composite uniquene
 - **Booked nights and revenue are estimates:** they come from Inside Airbnb's occupancy model, not from actual booking data.
 - **Inactive listings are included in city totals:** listing counts and the median booked nights include listings that show no price and aren't actively offered (44% in Paris), which pulls the Paris median down.
 
-## Next steps
-
-Done:
-- [x] Replace the separate dbt tasks with `dbt build`
-- [x] Pin the dbt versions in the Dockerfile
-- [x] Keep missing prices as null in `dim_listings`
-- [x] Run the pipeline as a dedicated least-privilege role instead of `ACCOUNTADMIN`
-
-Open:
-- [ ] Use a Snowflake **storage integration** instead of AWS keys in the `COPY` statement
-- [ ] Skip unchanged files in the extract (idempotent uploads)
-- [ ] Add the Pinecone load as a final DAG task
 
